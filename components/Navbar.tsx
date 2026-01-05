@@ -18,10 +18,11 @@ export const Navbar: React.FC = () => {
       <div className="container mx-auto px-4 lg:px-8 flex justify-between items-center">
         {/* Logo Section */}
         <div className="flex items-center gap-3">
-          {/* Placeholder for the logo image requested */}
-          <div className="w-10 h-10 bg-gradient-to-tr from-primary-600 to-primary-400 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-primary-600/20">
-            D
-          </div>
+          <img
+            src="/images/logo.png"
+            alt="Dunakanyar Esztétika Logo"
+            className="w-10 h-10 object-contain"
+          />
           <div className="flex flex-col">
             <span className={`text-xl font-extrabold font-heading leading-none ${scrolled ? 'text-gray-900' : 'text-gray-900'}`}>
               Dunakanyar
@@ -34,13 +35,12 @@ export const Navbar: React.FC = () => {
 
         {/* Contact CTA - No Navigation Links */}
         <div className="flex items-center gap-4">
-          <a 
+          <a
             href={`tel:${LANDING_DATA.contact_details.phone_number}`}
-            className={`group flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow-lg ${
-              scrolled 
-                ? 'bg-primary-600 text-white hover:bg-primary-700 shadow-primary-600/30' 
+            className={`group flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow-lg ${scrolled
+                ? 'bg-primary-600 text-white hover:bg-primary-700 shadow-primary-600/30'
                 : 'bg-white text-gray-900 hover:bg-gray-50 shadow-gray-200/50'
-            }`}
+              }`}
           >
             <Phone size={18} className="transition-transform group-hover:rotate-12" />
             <span className="hidden md:inline">{LANDING_DATA.contact_details.phone_number}</span>
