@@ -111,14 +111,14 @@ export const LANDING_DATA: LandingData = {
     { "value": "Képzett, tapasztalt masszőr" },
     { "value": "6+ különböző masszázstípus" },
     { "value": "Nyugodt, kellemes környezet" },
-    { "value": "Nyíregyháza központjában, könnyen megközelíthető" },
+    { "value": "Budapest szívében, könnyen megközelíthető" },
     { "value": "Rugalmas időpontfoglalás" },
     { "value": "Személyre szabott kezelések" }
   ],
   "pricing_structures": [],
   "contact_details": {
-    "phone_number": "06 20 / 213-0094",
-    "address": "Nyíregyháza, Szent István utca 2",
+    "phone_number": "06 30 558 9457",
+    "address": "Budapest, Hegedűs Gyula u. 90, 1133",
     "email_address": "",
     "opening_hours": "Hétfőtől szombatig, előzetes bejelentkezéssel"
   },

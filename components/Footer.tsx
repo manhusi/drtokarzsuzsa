@@ -16,7 +16,7 @@ export const Footer: React.FC = () => {
               Bence<span className="text-gold-400">Masszázs</span>
             </h3>
             <p className="text-gray-400 max-w-md leading-relaxed mb-6">
-              Professzionális masszázs szolgáltatások Nyíregyháza központjában. Svéd, relax, aromaterápiás masszázs és speciális kezelések a tested és lelked harmóniájáért.
+              Professzionális masszázs szolgáltatások Budapest szívében. Svéd, relax, aromaterápiás masszázs és speciális kezelések a tested és lelked harmóniájáért.
             </p>
             <a
               href="https://bencemasszazsnyiregyhaza.booked4.us/public/book"

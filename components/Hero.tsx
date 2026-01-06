@@ -30,7 +30,7 @@ export const Hero: React.FC = () => {
               </div>
               <div className="h-4 w-px bg-gold-400/30"></div>
               <span className="text-xs font-bold text-gold-400 tracking-wide uppercase">
-                Nyíregyháza
+                Budapest
               </span>
             </div>
 
@@ -42,7 +42,7 @@ export const Hero: React.FC = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-gray-400 font-body leading-relaxed">
-              Professzionális masszázs Nyíregyházán. <br className="hidden md:block" />
+              Professzionális masszázs Budapesten. <br className="hidden md:block" />
               <strong className="text-gold-400">Válaszd ki a számodra ideális kezelést</strong> – segítünk megtalálni!
             </p>
 

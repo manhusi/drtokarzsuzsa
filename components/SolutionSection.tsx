@@ -6,7 +6,7 @@ const STATIC_IMAGES: Record<string, string> = {
   "Svéd Masszázs": "/images/sved-masszazs.jpg",
   "Relax Masszázs": "/images/relax-masszazs-1.jpg",
   "Aromaterápiás Masszázs": "/images/relax-masszazs-2.jpg",
-  "Talpmasszázs": "/images/nyak-masszazs.jpg",
+  "Talpmasszázs": "/images/talp-masszazs.jpg",
   "Speciális Kezelések": "/images/sport-masszazs.jpg"
 };
 
