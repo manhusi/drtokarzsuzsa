@@ -1,25 +1,15 @@
 import React from 'react';
 import { LANDING_DATA } from '../constants';
-import { Star, BadgeCheck, ExternalLink } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const Testimonials: React.FC = () => {
   const testimonials = LANDING_DATA.trust_signals.filter(t => t.type === 'testimonial');
+  const [scrollPosition, setScrollPosition] = React.useState(0);
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
 
-  // Google Logo component
-  const GoogleLogo = () => (
-    <div className="flex text-4xl md:text-5xl font-bold tracking-tighter font-heading select-none">
-      <span className="text-[#4285F4]">G</span>
-      <span className="text-[#EA4335]">o</span>
-      <span className="text-[#FBBC05]">o</span>
-      <span className="text-[#4285F4]">g</span>
-      <span className="text-[#34A853]">l</span>
-      <span className="text-[#EA4335]">e</span>
-    </div>
-  );
-
-  // Small Google G icon
+  // Google G icon SVG
   const GoogleIcon = () => (
-    <svg viewBox="0 0 24 24" className="w-5 h-5" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0" xmlns="http://www.w3.org/2000/svg">
       <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
       <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
       <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
@@ -29,82 +19,110 @@ export const Testimonials: React.FC = () => {
 
   // Generate initials from name
   const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   };
 
   // Generate a consistent color based on name
   const getAvatarColor = (name: string) => {
     const colors = [
-      'from-purple-500 to-purple-600',
-      'from-blue-500 to-blue-600',
-      'from-green-500 to-green-600',
-      'from-orange-500 to-orange-600',
-      'from-pink-500 to-pink-600',
+      'bg-purple-500',
+      'bg-blue-500',
+      'bg-green-500',
+      'bg-orange-500',
+      'bg-pink-500',
+      'bg-teal-500',
+      'bg-indigo-500',
     ];
     const index = name.charCodeAt(0) % colors.length;
     return colors[index];
   };
 
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 340;
+      const newPosition = direction === 'left'
+        ? scrollPosition - scrollAmount
+        : scrollPosition + scrollAmount;
+      scrollContainerRef.current.scrollTo({ left: newPosition, behavior: 'smooth' });
+      setScrollPosition(newPosition);
+    }
+  };
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      setScrollPosition(scrollContainerRef.current.scrollLeft);
+    }
+  };
+
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-900 via-gray-950 to-black overflow-hidden">
-      <div className="container mx-auto px-4 relative">
+    <section className="py-20 bg-[#f8f9fa] overflow-hidden">
+      <div className="container mx-auto px-4">
 
-        {/* Section Title */}
-        <div className="flex flex-col items-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold font-heading text-white mb-4 text-center">
-            Mit gondolnak rólunk?
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold font-heading text-gray-900 mb-4">
+            Mit mondanak vendégeink?
           </h2>
-        </div>
 
-        {/* Google Reviews Header - Trust Building */}
-        <div className="flex flex-col items-center mb-16">
-          {/* Google Logo */}
-          <div className="mb-6">
-            <GoogleLogo />
-          </div>
-
-          {/* Rating Summary */}
-          <div className="flex flex-col items-center gap-4 mb-6">
-            <div className="flex items-center gap-2">
-              <span className="text-5xl md:text-6xl font-bold text-white">5.0</span>
+          {/* Google Rating Summary */}
+          <div className="inline-flex items-center gap-4 bg-white px-6 py-4 rounded-2xl shadow-lg border border-gray-100">
+            <GoogleIcon />
+            <div className="flex items-center gap-3">
+              <span className="text-4xl font-bold text-gray-900">5.0</span>
               <div className="flex flex-col items-start">
-                <div className="flex gap-1 text-[#FBBC05]">
+                <div className="flex gap-0.5">
                   {[1, 2, 3, 4, 5].map((s) => (
-                    <Star key={s} size={24} fill="currentColor" strokeWidth={0} />
+                    <Star key={s} size={18} fill="#FBBC05" stroke="#FBBC05" />
                   ))}
                 </div>
-                <span className="text-gray-400 text-sm">{testimonials.length} vélemény megjelenítve</span>
+                <span className="text-sm text-gray-500">260+ értékelés</span>
               </div>
             </div>
           </div>
-
-          {/* Trust Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-6 py-3 rounded-full">
-            <BadgeCheck className="text-[#4285F4] w-5 h-5" />
-            <span className="text-white font-semibold text-sm">Hitelesített Google értékelések</span>
-          </div>
         </div>
 
-        {/* Reviews Grid */}
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Reviews Carousel */}
+        <div className="relative">
+          {/* Navigation Buttons */}
+          <button
+            onClick={() => scroll('left')}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:shadow-xl transition-all hidden md:flex"
+            aria-label="Előző"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          <button
+            onClick={() => scroll('right')}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:shadow-xl transition-all hidden md:flex"
+            aria-label="Következő"
+          >
+            <ChevronRight size={24} />
+          </button>
+
+          {/* Scrollable Container */}
+          <div
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+            className="flex gap-5 overflow-x-auto pb-4 px-2 snap-x snap-mandatory scrollbar-hide"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
             {testimonials.map((test, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group"
+                className="flex-shrink-0 w-[320px] bg-white rounded-xl p-5 shadow-md border border-gray-100 snap-start hover:shadow-lg transition-shadow"
               >
                 {/* Card Header */}
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    {/* Avatar with initials */}
-                    <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${getAvatarColor(test.source || '')} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
+                    {/* Avatar */}
+                    <div className={`w-10 h-10 rounded-full ${getAvatarColor(test.source || '')} flex items-center justify-center text-white font-semibold text-sm`}>
                       {getInitials(test.source || 'U')}
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900 text-[15px] leading-tight">
+                      <h4 className="font-semibold text-gray-900 text-sm leading-tight">
                         {test.source}
                       </h4>
-                      <span className="text-gray-500 text-xs leading-tight block">
+                      <span className="text-gray-400 text-xs">
                         {test.reviewCount}
                       </span>
                     </div>
@@ -112,18 +130,18 @@ export const Testimonials: React.FC = () => {
                   <GoogleIcon />
                 </div>
 
-                {/* Rating Row */}
+                {/* Rating & Date */}
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="flex text-[#FBBC05] gap-0.5">
+                  <div className="flex gap-0.5">
                     {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} size={16} fill="currentColor" strokeWidth={0} />
+                      <Star key={s} size={14} fill="#FBBC05" stroke="#FBBC05" />
                     ))}
                   </div>
-                  <span className="text-gray-500 text-sm">{test.date}</span>
+                  <span className="text-gray-400 text-xs">{test.date}</span>
                 </div>
 
-                {/* Content */}
-                <p className="text-gray-700 text-[15px] leading-relaxed">
+                {/* Review Text */}
+                <p className="text-gray-700 text-sm leading-relaxed line-clamp-4">
                   {test.content}
                 </p>
               </div>
@@ -131,11 +149,10 @@ export const Testimonials: React.FC = () => {
           </div>
         </div>
 
-        {/* More reviews indicator */}
-        <div className="text-center mt-10">
-          <span className="text-gold-400 text-xl font-bold">+260 vélemény</span>
-          <span className="text-gray-500 ml-2">a Google-ön</span>
-        </div>
+        {/* Mobile Scroll Hint */}
+        <p className="text-center text-gray-400 text-sm mt-4 md:hidden">
+          ← Húzd oldalra a további véleményekért →
+        </p>
 
       </div>
     </section>
