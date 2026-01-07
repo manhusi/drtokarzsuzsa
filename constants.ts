@@ -1,84 +1,63 @@
 import { LandingData } from './types';
 
+// Kardiológiai szolgáltatások teljes adatbázisa a chatbothoz
 export const FULL_SERVICES_DATA = {
-  "bencemasszazsnyiregyhaza_massage_services": [
+  "cardiology_services": [
     {
-      "service_name": "Svéd Masszázs 30 perces",
-      "detailed_description": "A svéd masszázs egy klasszikus masszázstechnika, amely öt alapvető mozdulatot alkalmaz: simítást, gyúrást, dörzsölést, ütögetést és rázást. Ez a technika segít a vérkeringés fokozásában, az izomfeszültség oldásában, és elősegíti a test relaxációját. Ajánlott azoknak, akik stresszes életmódot folytatnak, izomlázban vagy izommerevségben szenvednek, vagy egyszerűen csak általános jólétüket szeretnék fokozni. Adott testrész fér bele ebbe az idő intervalumba!",
-      "duration": "30 perc",
-      "pricing": "5500 Ft"
+      "service_name": "Kardiológiai konzultáció",
+      "detailed_description": "Átfogó kardiológiai vizsgálat, mely magában foglalja az anamnézis felvételét, fizikális vizsgálatot, EKG-t és szükség szerint további vizsgálatok megbeszélését. A konzultáció során személyre szabott terápiás javaslatot kap.",
+      "duration": "30-45 perc",
+      "indication": "Általános szív-érrendszeri panaszok, kontroll vizsgálat, megelőzés"
     },
     {
-      "service_name": "Svéd Masszázs 60 perces",
-      "detailed_description": "A svéd masszázs egy klasszikus masszázstechnika, amely öt alapvető mozdulatot alkalmaz: simítást, gyúrást, dörzsölést, ütögetést és rázást. Ez a technika segít a vérkeringés fokozásában, az izomfeszültség oldásában, és elősegíti a test relaxációját. Ajánlott azoknak, akik stresszes életmódot folytatnak, izomlázban vagy izommerevségben szenvednek, vagy egyszerűen csak általános jólétüket szeretnék fokozni. Teljes testmasszázs",
-      "duration": "60 perc",
-      "pricing": "7000 Ft"
+      "service_name": "EKG (Elektrokardiográfia)",
+      "detailed_description": "Az elektrokardiográfia a szív elektromos működésének vizsgálata. 10 elektródát helyezünk fel a mellkasra és a végtagokra. A vizsgálat fájdalommentes, pár percet vesz igénybe. Nemcsak ritmuszavarokat, hanem a legtöbb szervi szívbetegséget is kimutatja.",
+      "duration": "10-15 perc",
+      "indication": "Szívritmuszavar, mellkasi fájdalom, szívdobogásérzés"
     },
     {
-      "service_name": "Svéd Masszázs 90 perces",
-      "detailed_description": "A svéd masszázs egy klasszikus masszázstechnika, amely öt alapvető mozdulatot alkalmaz: simítást, gyúrást, dörzsölést, ütögetést és rázást. Ez a technika segít a vérkeringés fokozásában, az izomfeszültség oldásában, és elősegíti a test relaxációját. Ajánlott azoknak, akik stresszes életmódot folytatnak, izomlázban vagy izommerevségben szenvednek, vagy egyszerűen csak általános jólétüket szeretnék fokozni. Full teljes testmasszázs",
-      "duration": "90 perc",
-      "pricing": "9500 Ft"
+      "service_name": "Szívultrahang (Echocardiographia)",
+      "detailed_description": "A szívultrahang vizsgálat során működés közben láthatóvá válik a szív, vizsgálható a szívizom, az üregrendszer és a billentyűk. Megkülönböztethető a normális és a kóros véráramlás, mérhetők a szívméretek és az áramlási sebességek. A vizsgálat bal oldalon fekve történik.",
+      "duration": "20-30 perc",
+      "indication": "Szívbillentyű betegség, szívelégtelenség, cardiomyopathia"
     },
     {
-      "service_name": "Relax Masszázs 30 perces",
-      "detailed_description": "A relax masszázs célja a teljes test és elme ellazítása. Lágy, nyugtató mozdulatokkal segít csökkenteni a stresszt, oldja a feszültséget, és nyugodt, kiegyensúlyozott állapotot teremt. Ez a masszázstípus kifejezetten alkalmas azoknak, akik mentális kimerültséget tapasztalnak, alvási problémákkal küzdenek, vagy egyszerűen szeretnének egy nyugodt, pihentető élményt. Adott testrész masszázsa",
-      "duration": "30 perc",
-      "pricing": "5500 Ft"
+      "service_name": "Terheléses EKG",
+      "detailed_description": "Fizikai terhelés alatt a szív munkája 4-6-szorosára nőhet, és a szívizom vérellátásának is arányosan nőnie kell. Ha a koszorúerekben jelentős szűkületek vannak, a szívizom fokozott oxigénigénye nem elégíthető ki - ez jellegzetes EKG változásokkal jár. A vizsgálat futópadon vagy kerékpár-ergométeren történik.",
+      "duration": "30-45 perc",
+      "indication": "Koszorúér-betegség gyanúja, infarktus utáni kontroll"
     },
     {
-      "service_name": "Relax Masszázs 60 perces",
-      "detailed_description": "A relax masszázs célja a teljes test és elme ellazítása. Lágy, nyugtató mozdulatokkal segít csökkenteni a stresszt, oldja a feszültséget, és nyugodt, kiegyensúlyozott állapotot teremt. Ez a masszázstípus kifejezetten alkalmas azoknak, akik mentális kimerültséget tapasztalnak, alvási problémákkal küzdenek, vagy egyszerűen szeretnének egy nyugodt, pihentető élményt. Teljes testmasszázs",
-      "duration": "60 perc",
-      "pricing": "7000 Ft"
+      "service_name": "Holter EKG (24-48 órás)",
+      "detailed_description": "A Holter monitorizálás során 24-48 órán keresztül folyamatosan rögzítjük a szív elektromos tevékenységét. A páciens egy mobiltelefon méretű készüléket visel, ami digitálisan rögzíti az EKG-t. A ritmuszavarok alapvető vizsgálómódszere.",
+      "duration": "24-48 óra",
+      "indication": "Szívritmuszavar, szívdobogásérzés, ájulás kivizsgálása"
     },
     {
-      "service_name": "Relax Masszázs 90 perces",
-      "detailed_description": "A relax masszázs célja a teljes test és elme ellazítása. Lágy, nyugtató mozdulatokkal segít csökkenteni a stresszt, oldja a feszültséget, és nyugodt, kiegyensúlyozott állapotot teremt. Ez a masszázstípus kifejezetten alkalmas azoknak, akik mentális kimerültséget tapasztalnak, alvási problémákkal küzdenek, vagy egyszerűen szeretnének egy nyugodt, pihentető élményt. Full teljes testmasszázs",
-      "duration": "90 perc",
-      "pricing": "9500 Ft"
+      "service_name": "ABPM (24 órás vérnyomás monitorozás)",
+      "detailed_description": "A készülék 24 órán át legalább óránként mér vérnyomást és tárolja az eredményeket. Betekintést nyerünk a napi vérnyomás-ingadozásba, kiszűrhetők a 'fehér köpeny' hipertónia esetek, amikor csak az orvosi rendelőben magas a vérnyomás.",
+      "duration": "24 óra",
+      "indication": "Magas vérnyomás kivizsgálása, terápia beállítása"
     },
     {
-      "service_name": "Talp Masszázs 20 perces",
-      "detailed_description": "A talpmasszázs a lábak specifikus pontjainak stimulálására összpontosít. A reflexológia elvei alapján a talpon található reflexzónák stimulálása pozitívan hat az egész szervezetre. Segít javítani a vérkeringést a lábakban, csökkenti a duzzanatot, oldja a fáradtságot, és általános jólétet teremt. Ajánlott azoknak, akik sokat állnak vagy járnak, nehéz lábérzéssel küzdenek, vagy általános relaxációt keresnek.",
-      "duration": "20 perc",
-      "pricing": "3000 Ft"
+      "service_name": "Laboratóriumi vizsgálatok",
+      "detailed_description": "A belgyógyászati és kardiológiai vizsgálat során, valamint a betegségek és beavatkozások követése kapcsán bizonyos vérlaboratóriumi paraméterek ismerete elengedhetetlen. A vérvétel a könyökhajlati vénából történik, zárt rendszerű technológiával szinte fájdalommentes.",
+      "duration": "10 perc",
+      "indication": "Koleszterin, vércukor, vesefunkció, pajzsmirigy"
+    }
+  ],
+  "patient_advice": [
+    {
+      "topic": "Vérnyomásmérés",
+      "advice": "A vérnyomás egészséges emberekben is változik percről percre, 100-140 Hgmm között. Fizikai aktivitás, pszichés stressz során akár az egészséges határértékeket is meghaladhatja. Magas vérnyomás betegség gyanúja akkor merül fel, ha a nyugalmi vérnyomásértékek 140 Hgmm felett vannak."
     },
     {
-      "service_name": "Talp Masszázs 30 perces",
-      "detailed_description": "A talpmasszázs a lábak specifikus pontjainak stimulálására összpontosít. A reflexológia elvei alapján a talpon található reflexzónák stimulálása pozitívan hat az egész szervezetre. Segít javítani a vérkeringést a lábakban, csökkenti a duzzanatot, oldja a fáradtságot, és általános jólétet teremt. Ajánlott azoknak, akik sokat állnak vagy járnak, nehéz lábérzéssel küzdenek, vagy általános relaxációt keresnek.",
-      "duration": "30 perc",
-      "pricing": "4500 Ft"
+      "topic": "Szívinfarktus figyelmeztető jelei",
+      "advice": "Figyelmeztető jelek: 1) Mellkasi fájdalom - legalább 30 percig tartó, nyomó vagy szorító jellegű. 2) Kellemetlen érzés a felsőtestben - kar, hát, nyak, állkapocs fájdalom. 3) Légszomj. 4) Hideg verejték, hányinger, szédülés. Nőknél gyakrabban jelentkezik hányinger és a hátba sugárzó fájdalom."
     },
     {
-      "service_name": "Aromaterápiás Masszázs 30 perces",
-      "detailed_description": "Az aromaterápiás masszázs ötvözi a klasszikus masszázstechnikákat az illóolajok terápiás hatásaival. A különböző illóolajok specifikus hatásokat fejtenek ki: nyugtatnak, energizálnak, vagy gyógyítanak. Ez a masszázstípus kiválóan alkalmas a stressz csökkentésére, a hangulat javítására, az immunrendszer erősítésére, és az általános jólét fokozására. Ajánlott azoknak, akik holisztikus megközelítést keresnek, érzelmi kiegyensúlyozottságra vágynak, vagy természetes terápiákat részesítenek előnyben. Adott testrész masszázsa",
-      "duration": "30 perc",
-      "pricing": "5500 Ft"
-    },
-    {
-      "service_name": "Aromaterápiás Masszázs 60 perces",
-      "detailed_description": "Az aromaterápiás masszázs ötvözi a klasszikus masszázstechnikákat az illóolajok terápiás hatásaival. A különböző illóolajok specifikus hatásokat fejtenek ki: nyugtatnak, energizálnak, vagy gyógyítanak. Ez a masszázstípus kiválóan alkalmas a stressz csökkentésére, a hangulat javítására, az immunrendszer erősítésére, és az általános jólét fokozására. Ajánlott azoknak, akik holisztikus megközelítést keresnek, érzelmi kiegyensúlyozottságra vágynak, vagy természetes terápiákat részesítenek előnyben. Teljes testmasszázs",
-      "duration": "60 perc",
-      "pricing": "7000 Ft"
-    },
-    {
-      "service_name": "Aromaterápiás Masszázs 90 perces",
-      "detailed_description": "Az aromaterápiás masszázs ötvözi a klasszikus masszázstechnikákat az illóolajok terápiás hatásaival. A különböző illóolajok specifikus hatásokat fejtenek ki: nyugtatnak, energizálnak, vagy gyógyítanak. Ez a masszázstípus kiválóan alkalmas a stressz csökkentésére, a hangulat javítására, az immunrendszer erősítésére, és az általános jólét fokozására. Ajánlott azoknak, akik holisztikus megközelítést keresnek, érzelmi kiegyensúlyozottságra vágynak, vagy természetes terápiákat részesítenek előnyben. Full teljes testmasszázs",
-      "duration": "90 perc",
-      "pricing": "9000 Ft"
-    },
-    {
-      "service_name": "Köpölyözés",
-      "detailed_description": "A köpölyözés egy hagyományos terápiás eljárás, amely vákuumos csészék segítségével stimulálja a bőrt és az alatta lévő szöveteket. Ez a technika fokozza a vérkeringést, segít a toxinok eltávolításában, oldja az izomfeszültséget, és csökkenti a gyulladást. Különösen hatékony háti fájdalmak, izomgörcsök, légúti problémák esetén, valamint sportolók regenerálódásához. Ajánlott azoknak, akik krónikus fájdalommal küzdenek, méregtelenítésre vágynak, vagy hagyományos gyógyító módszereket keresnek. Adott testrész köpölyözése",
-      "duration": "30 perc",
-      "pricing": "3500 Ft"
-    },
-    {
-      "service_name": "Kineziológiai Tapasz felhelyezése (TAPE)",
-      "detailed_description": "A kineziológiai tapasz (tape) egy rugalmas, breathable szalag, amelyet specifikus technikával helyeznek fel a bőrre az izmok és ízületek támogatására. Segít csökkenteni a fájdalmat, javítja a vérkeringést és a nyirokelvezetést, támogatja az izomfunkciót sérülés után, és megelőzi a további sérüléseket. Különösen hasznos sportolók számára, sérülések utáni rehabilitáció során, valamint krónikus fájdalmak kezelésében. Ajánlott azoknak, akik aktív életmódot folytatnak, sérülésből lábadoznak, vagy preventív támogatást keresnek. Adott testrészre értendő az ár!",
-      "duration": "30 perc",
-      "pricing": "4000 Ft"
+      "topic": "Teendő szívinfarktus gyanúja esetén",
+      "advice": "Szívinfarktus esetén minden perc számít! A gyors cselekvés életet menthet. Ne késlekedjen a mentő hívásával - ez a leggyorsabb út az életmentő beavatkozáshoz. A kiérkező orvos azonnal megkezdi a gyógyszeres terápiát."
     }
   ]
 };
@@ -86,129 +65,74 @@ export const FULL_SERVICES_DATA = {
 export const LANDING_DATA: LandingData = {
   "service_categories": [
     {
-      "category_name": "Svéd Masszázs",
-      "description": "Klasszikus masszázstechnika a vérkeringés fokozására és az izomfeszültség oldására. 30, 60 vagy 90 perces kezelések."
+      "category_name": "Kardiológiai konzultáció",
+      "description": "Átfogó szív-érrendszeri vizsgálat, EKG és személyre szabott terápiás javaslat egyetlen alkalommal."
     },
     {
-      "category_name": "Relax Masszázs",
-      "description": "A teljes test és elme ellazítása lágy, nyugtató mozdulatokkal. Ideális stressz és feszültség oldására."
+      "category_name": "Szívultrahang",
+      "description": "A szív működésének, billentyűinek és üregrendszerének részletes ultrahangos vizsgálata."
     },
     {
-      "category_name": "Aromaterápiás Masszázs",
-      "description": "A klasszikus masszázstechnikák ötvözése illóolajok terápiás hatásaival. Holisztikus megközelítés a test és lélek harmóniájáért."
+      "category_name": "Terheléses EKG",
+      "description": "A szív működésének vizsgálata fizikai terhelés alatt - koszorúér-betegség kiszűrésére."
     },
     {
-      "category_name": "Talpmasszázs",
-      "description": "Reflexológiai alapú kezelés, amely a talp stimulálásával az egész szervezetre pozitívan hat."
+      "category_name": "Holter vizsgálat",
+      "description": "24-48 órás folyamatos EKG monitorozás ritmuszavarok kimutatására."
     },
     {
-      "category_name": "Speciális Kezelések",
-      "description": "Köpölyözés és kineziológiai tapasz felhelyezés – hagyományos és modern technikák a fájdalomcsillapításra."
+      "category_name": "ABPM vizsgálat",
+      "description": "24 órás vérnyomás monitorozás a valós vérnyomásértékek megismerésére."
     }
   ],
   "treatment_benefits": [],
   "unique_selling_propositions": [
-    { "value": "Képzett, tapasztalt masszőr" },
-    { "value": "6+ különböző masszázstípus" },
-    { "value": "Nyugodt, kellemes környezet" },
-    { "value": "Nyíregyháza központjában, könnyen megközelíthető" },
-    { "value": "Rugalmas időpontfoglalás" },
-    { "value": "Személyre szabott kezelések" }
+    { "value": "30+ év kardiológiai tapasztalat" },
+    { "value": "Átfogó vizsgálat egy alkalommal" },
+    { "value": "Modern, jól felszerelt rendelő" },
+    { "value": "Személyre szabott terápia" },
+    { "value": "Invazív kardiológiai jártasság" },
+    { "value": "Demeter Alapítvány támogatása" }
   ],
   "pricing_structures": [],
   "contact_details": {
-    "phone_number": "",
-    "address": "4400 Nyíregyháza, Szent István utca 2.",
+    "phone_number": "30/551-6668",
+    "address": "4400 Nyíregyháza, Északi krt 46/Fsz 1",
     "email_address": "",
-    "opening_hours": "Hétfőtől szombatig, előzetes bejelentkezéssel"
+    "opening_hours": "Előzetes bejelentkezéssel"
   },
-  "trust_signals": [
-    {
-      "type": "testimonial",
-      "content": "Sziasztok\nLe a kalappal Bence előtt 🙏🙏\nÜgyes, tapasztalt, erőskezű masszőr.",
-      "source": "Attila Sebők",
-      "reviewCount": "6 vélemény · 6 fotó",
-      "date": "egy éve",
-      "avatar": ""
-    },
-    {
-      "type": "testimonial",
-      "content": "Kiváló, alapos masszőr, aki nem csak a levegőbe beszél. Derék és hát fájásomat már két alkalom alatt rendbe hozta, a merev izmaimat fellazította. Csak ajánlani tudom!",
-      "source": "Zsuzsanna Izsák",
-      "reviewCount": "1 vélemény",
-      "date": "11 hónapja",
-      "avatar": ""
-    },
-    {
-      "type": "testimonial",
-      "content": "Köszönöm szépen a segítséget, a köpölyözést. Végtelenül kedves, hozzáértő fiatalember személyében tiszta környezetben várja a hát-, váll-, derékfájó embereket. Szívből ajánlom ❤️",
-      "source": "Anita Rátonyiné Kovács",
-      "reviewCount": "1 vélemény",
-      "date": "7 hónapja",
-      "avatar": ""
-    },
-    {
-      "type": "testimonial",
-      "content": "Maximális elégedettség és teljesen korrekt, rugalmas a hozzá állása, bárcsak mindenki ilyen lenne! Egy erős masszázst kértem Bencétől úgy érzem sikerült is. Sportolásból adódó izom letapadásokat lazán felmasszirozta. Köszönöm szépen, biztosan megyek még 💪👌👑",
-      "source": "Tibor Rodák",
-      "reviewCount": "2 vélemény",
-      "date": "8 hónapja",
-      "avatar": ""
-    },
-    {
-      "type": "testimonial",
-      "content": "Első alkalommal jártam Bencénél és nagyon meg vagyok elégedve a munkájával csak ajánlani tudom !!\nTiszta szép rendezett környezett vissza térő vendég leszek\nKöszönöm szépen Bence innen is a sok sok segítséget !!",
-      "source": "Róbert Kaló",
-      "reviewCount": "2 vélemény",
-      "date": "7 hónapja",
-      "avatar": ""
-    },
-    {
-      "type": "testimonial",
-      "content": "Először jártam Bencénél! Elég rég voltam már masszázson, de az első alkalmon volt is mit dolgoznia! Csípő, derék, hát, váll és nyak volt a célpont! Következő alkalommal már célkeresztbe kerülnek a lábak is. Jó élményekkel és felfrissülve távoztam tőle! Csak ajánlani tudom mindenkinek! Foglaljatok időpontot nem bánjátok meg! 😉",
-      "source": "Tibor",
-      "reviewCount": "Helyi idegenvezető · 19 vélemény · 139 fotó",
-      "date": "9 hónapja",
-      "avatar": ""
-    },
-    {
-      "type": "testimonial",
-      "content": "Végre egy jó kezű masszőr! Nagyon figyelmes, ügyes. Lazító masszázson jártam nála, szinte éreztem ahogy a terhek dobódnak le rólam! Ajánlom mindenkinek! 🙂",
-      "source": "Norbert Kánisz",
-      "reviewCount": "1 vélemény",
-      "date": "2 hónapja",
-      "avatar": ""
-    },
-    {
-      "type": "testimonial",
-      "content": "Erős hátfájdalom miatt kerestem fel Bencét. Először jártam nála, de maximálisan elégedett vagyok. Sokkal könnyebb a mozgásom, jobb a közérzetem. A szalon igényes, jó hangulatú! Külön köszönöm a frissítő vizet a végén! 🙂 Csak ajánlani tudom!",
-      "source": "Beus Pavlovics-Poór",
-      "reviewCount": "2 vélemény",
-      "date": "2 hónapja",
-      "avatar": ""
-    }
-  ]
+  "trust_signals": []
 };
 
 export const FAQ_ITEMS = [
   {
-    question: "Milyen ruházatban történik a masszázs?",
-    answer: "A masszázs fehérneműben történik. A kezelés során a test azon részeit, amelyeket éppen nem masszírozok, törölközővel betakarva tartom a melegérzet és a komfort érdekében."
+    question: "Hogyan készüljek fel a kardiológiai vizsgálatra?",
+    answer: "Hozza magával korábbi leleteit, gyógyszerlistáját. Terheléses EKG esetén kényelmes ruházatot és sportcipőt viseljen. ABPM és Holter vizsgálat előtt zuhanyzás ajánlott, mert a készülék viselése alatt nem lehet."
   },
   {
-    question: "Fájni fog a masszázs?",
-    answer: "A cél a feszültségoldás, ami a letapadt izmoknál járhat némi 'jóleső' fájdalommal, de sosem lehet elviselhetetlen. Folyamatosan kommunikálunk, az erősséget mindig az egyéni fájdalomküszöbödhoz igazítom."
+    question: "Fáj-e a szívultrahang vizsgálat?",
+    answer: "A szívultrahang teljesen fájdalommentes. A vizsgálat során bal oldalán fekszik, a vizsgálófej a mellkasára kerül. A vizsgálat 20-30 percet vesz igénybe."
   },
   {
-    question: "Mennyivel evés után érdemes érkezni?",
-    answer: "A masszázs előtt 1-1,5 órával már nem ajánlott nehéz ételeket fogyasztani, mert a teli has kellemetlen lehet fekvés közben és megterheli a szervezetet."
+    question: "Milyen gyakran érdemes kardiológushoz járni?",
+    answer: "40 éves kor felett évente, magas vérnyomás, cukorbetegség, emelkedett koleszterin vagy szívbetegség a családban esetén már korábban is ajánlott a rendszeres kontroll."
   },
   {
-    question: "Mit tegyek, ha le kell mondanom az időpontot?",
-    answer: "Az élet néha közbeszól. Kérlek, ha nem tudsz eljönni, legalább 24 órával az időpont előtt jelezd telefonon vagy üzenetben, hogy másnak tudjam adni a helyet."
+    question: "Mikor forduljak azonnal orvoshoz?",
+    answer: "Mellkasi fájdalom, szorításérzet, légszomj, tartós szívdobogásérzés, ájulás vagy eszméletvesztés esetén azonnal forduljon orvoshoz vagy hívjon mentőt!"
   },
   {
-    question: "Mikor NEM javasolt a masszázs?",
-    answer: "Lázas állapotban, fertőző betegség alatt, friss sérülések (törés, szakadás) esetén, vagy gyulladt visszérnél a masszázs ellenjavallt. Ha bizonytalan vagy, konzultáljunk telefonon!"
+    question: "Elfogadnak-e beutalót?",
+    answer: "A magánrendelés beutaló nélkül is igénybe vehető. A vizsgálati díj egy része a Demeter Alapítványt támogatja."
   }
+];
+
+// Orvosi szakértelem és képzettség
+export const DOCTOR_EXPERTISE = [
+  "Kardiológia",
+  "Csecsemő és Gyermekgyógyászat",
+  "Neonatológia",
+  "Invazív Kardiológia",
+  "ECHO licenc",
+  "Akut infarktus ellátás"
 ];

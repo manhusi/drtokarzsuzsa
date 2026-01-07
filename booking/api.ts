@@ -1,9 +1,9 @@
 import { AvailabilityResponse, BookingRequest } from './types';
 
-// Bence Masszázs API configuration
+// Dr. Tokár Zsuzsanna Kardiológia API configuration
 const BASE_URL = 'https://jdwhmvruzbvkzgfdousz.supabase.co/functions/v1';
-const PUBLIC_API_KEY = 'GBovqxbk7IQM7eXWUXpDrHGzxMvp3Qmy3uONcG5Hu26fJReh';
-const BOOKING_API_KEY = 'HhV30RbW6GvqdsWHkrvPnD2BcBbjEA9OJCMHrB6ebHNovJMR';
+const PUBLIC_API_KEY = 'I1PqMKsznx7kVd5aTx9qQQN6YHXEkOVVBTTpCE6f3nZGfu7O';
+const BOOKING_API_KEY = 'mXqaHgCWU2TRBwN6296EIqJcqzEWaJdkVCRamma97ecHmWFB';
 
 export class BookingApiError extends Error {
     constructor(

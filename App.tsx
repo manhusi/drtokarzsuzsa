@@ -4,7 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ProblemSection } from './components/ProblemSection';
 import { SolutionSection } from './components/SolutionSection';
-import { Testimonials } from './components/Testimonials';
+// import { Testimonials } from './components/Testimonials'; // Google reviews coming later
 import { FAQ } from './components/FAQ';
 import { Footer } from './components/Footer';
 import { BookingPage } from './components/BookingPage';
@@ -17,7 +17,7 @@ function LandingPage() {
       <Hero />
       <ProblemSection />
       <SolutionSection />
-      <Testimonials />
+      {/* <Testimonials /> Google reviews coming later */}
       <FAQ />
       <Footer />
     </>
@@ -26,7 +26,7 @@ function LandingPage() {
 
 function App() {
   return (
-    <div className="min-h-screen bg-black font-body selection:bg-gold-400/30 selection:text-white">
+    <div className="min-h-screen bg-primary-900 font-body selection:bg-accent-400/30 selection:text-white">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/foglalas" element={<BookingPage />} />

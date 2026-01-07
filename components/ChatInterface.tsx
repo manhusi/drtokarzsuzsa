@@ -1,38 +1,38 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, Bot, Sparkles, RefreshCw, CalendarCheck } from 'lucide-react';
+import { Send, Bot, Sparkles, RefreshCw, CalendarCheck, Heart } from 'lucide-react';
 import { GoogleGenAI, FunctionDeclaration, Type } from "@google/genai";
 import { FULL_SERVICES_DATA } from '../constants';
 
 const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
-// Define the tool for recommending a service
-const recommendServiceFunction: FunctionDeclaration = {
-  name: 'recommendService',
+// Define the tool for recommending an examination
+const recommendExaminationFunction: FunctionDeclaration = {
+  name: 'recommendExamination',
   parameters: {
     type: Type.OBJECT,
-    description: 'Recommend a specific massage service to the user and explain why.',
+    description: 'Recommend a specific cardiology examination to the patient and explain why.',
     properties: {
-      serviceName: {
+      examinationName: {
         type: Type.STRING,
-        description: 'The exact name of the service from the available list.',
+        description: 'The exact name of the examination from the available list.',
       },
       reasoning: {
         type: Type.STRING,
-        description: 'A brief, friendly explanation of why this service fits the user needs (in Hungarian).',
+        description: 'A brief, friendly explanation of why this examination fits the patient needs (in Hungarian).',
       },
     },
-    required: ['serviceName', 'reasoning'],
+    required: ['examinationName', 'reasoning'],
   },
 };
 
-const DEFAULT_SUGGESTIONS = ['Izomfeszültség', 'Stressz & Relaxáció', 'Sport utáni regeneráció', 'Tanácsot kérek'];
+const DEFAULT_SUGGESTIONS = ['Mellkasi fájdalom', 'Magas vérnyomás', 'Szívdobogásérzés', 'Szűrővizsgálat'];
 
 export const ChatInterface: React.FC = () => {
   const [messages, setMessages] = useState<{ id: number; sender: 'bot' | 'user'; text?: string; isRecommendation?: boolean; serviceData?: any }[]>([
     {
       id: 1,
       sender: 'bot',
-      text: 'Üdvözlöm! Bence Masszázs Szalon virtuális asszisztense vagyok. Segítek megtalálni a számodra ideális masszázst. Mi az, ami leginkább zavar mostanában – feszültség, fájdalom, vagy egyszerűen csak kell egy kis feltöltődés?'
+      text: 'Üdvözlöm! Dr. Tokár Zsuzsanna Kardiológiai Magánrendelésének virtuális asszisztense vagyok. Segítek megtalálni az Ön számára megfelelő vizsgálatot. Milyen panasza van, vagy miben segíthetek?'
     },
   ]);
 
@@ -76,14 +76,14 @@ export const ChatInterface: React.FC = () => {
   useEffect(() => {
     const initChat = async () => {
       const chat = ai.chats.create({
-        model: 'gemini-3-flash-preview',
+        model: 'gemini-2.0-flash-001',
         config: {
-          systemInstruction: `Te a Bence Masszázs Szalon virtuális asszisztense vagy Nyíregyházán. 
-          A célod, hogy segíts a felhasználóknak megtalálni a számukra ideális masszázs kezelést 2-3 célzott kérdés feltevésével.
-          Magyarul beszélj. Légy udvarias, professzionális, de barátságos. 
+          systemInstruction: `Te Dr. Tokár Zsuzsanna Kardiológiai Magánrendelésének virtuális asszisztense vagy Nyíregyházán. 
+          A célod, hogy segíts a pácienseknek megtalálni a számukra megfelelő kardiológiai vizsgálatot 2-3 célzott kérdés feltevésével.
+          Magyarul beszélj. Légy udvarias, professzionális, és együttérző. 
           Tartsd a válaszaidat tömören (max 2-3 mondat).
 
-          FONTOS: A felhasználót már üdvözöltük. NE mutatkozz be újra. NE mondd, hogy "Üdvözlöm" vagy "Bence Masszázs asszisztense vagyok". Kezdj egyből a felhasználó problémájával/inputjával.
+          FONTOS: A pácienst már üdvözöltük. NE mutatkozz be újra. NE mondd, hogy "Üdvözlöm". Kezdj egyből a páciens problémájával/inputjával.
           
           FONTOS SZABÁLY:
           Minden kérdésed végére adj 3-4 rövid, kattintható opciót.
@@ -91,26 +91,28 @@ export const ChatInterface: React.FC = () => {
           [OPTIONS: Opció 1 | Opció 2 | Opció 3]
 
           Példa: 
-          "Melyik testrész fáj a legjobban?"
-          [OPTIONS: Nyak/Váll | Hát | Derék | Láb]
+          "Milyen jellegű a panasz?"
+          [OPTIONS: Mellkasi fájdalom | Szívdobogás | Légszomj | Fáradékonyság]
           
-          Elérhető szolgáltatások:
+          Elérhető vizsgálatok és szolgáltatások:
           ${JSON.stringify(FULL_SERVICES_DATA)}
 
           Folyamat:
-          1. Kérdezd meg milyen problémája van (feszültség, fájdalom, stressz, sport). Add meg [OPTIONS: ...]
-          2. Kérdezz pontosító kérdéseket (melyik testrész, mennyi ideje, milyen erősségű). Add meg [OPTIONS: ...]
-          3. Ha azonosítottad a szolgáltatást, használd a 'recommendService' eszközt.
+          1. Kérdezd meg milyen panasza van (mellkasi fájdalom, szívdobogás, magas vérnyomás, stb.). Add meg [OPTIONS: ...]
+          2. Kérdezz pontosító kérdéseket (mióta van, milyen gyakran, terhelésre fokozódik-e). Add meg [OPTIONS: ...]
+          3. Ha azonosítottad a megfelelő vizsgálatot, használd a 'recommendExamination' eszközt.
           
-          Masszázs típusok áttekintése:
-          - Svéd masszázs: Klasszikus, izomfeszültség oldás, vérkeringés javítás
-          - Relax masszázs: Stressz csökkentés, ellazulás, alvási problémák
-          - Aromaterápiás: Illóolajokkal, holisztikus megközelítés
-          - Talpmasszázs: Reflexológia, akik sokat állnak
-          - Köpölyözés: Mélyebb fájdalmak, sportolók, méregtelenítés
-          - TAPE: Sportolók, sérülések utáni támogatás
+          Vizsgálat típusok áttekintése:
+          - Kardiológiai konzultáció: Általános vizsgálat, első alkalom
+          - EKG: Ritmuszavarok, szívdobogásérzés
+          - Szívultrahang: Billentyűbetegség, szívelégtelenség gyanúja
+          - Terheléses EKG: Koszorúér-betegség gyanúja, mellkasi fájdalom
+          - Holter: Ritmuszavar, ájulás, szívdobogás kivizsgálása
+          - ABPM: Magas vérnyomás kivizsgálása, terápia beállítása
+          
+          FONTOS: Ha sürgős panaszról van szó (akut mellkasi fájdalom, ájulás, súlyos légszomj), MINDIG javasold a mentő hívását (104) vagy sürgősségi ellátást!
           `,
-          tools: [{ functionDeclarations: [recommendServiceFunction] }],
+          tools: [{ functionDeclarations: [recommendExaminationFunction] }],
         },
       });
       setChatSession(chat);
@@ -137,14 +139,14 @@ export const ChatInterface: React.FC = () => {
 
       if (functionCalls && functionCalls.length > 0) {
         const call = functionCalls[0];
-        if (call.name === 'recommendService') {
-          const { serviceName, reasoning } = call.args as any;
+        if (call.name === 'recommendExamination') {
+          const { examinationName, reasoning } = call.args as any;
 
           setMessages(prev => [...prev, {
             id: Date.now() + 1,
             sender: 'bot',
             isRecommendation: true,
-            serviceData: { name: serviceName, reason: reasoning }
+            serviceData: { name: examinationName, reason: reasoning }
           }]);
 
           setCurrentSuggestions(['Időpontfoglalás', 'Másik kérdésem van', 'Újrakezdés']);
@@ -172,7 +174,7 @@ export const ChatInterface: React.FC = () => {
       setMessages(prev => [...prev, {
         id: Date.now() + 1,
         sender: 'bot',
-        text: 'Elnézést, egy kis technikai hiba történt. Kérem próbáld újra később.'
+        text: 'Elnézést, egy kis technikai hiba történt. Kérem próbálja újra később, vagy hívja rendelőnket: 30/551-6668.'
       }]);
       setCurrentSuggestions(DEFAULT_SUGGESTIONS);
     }
@@ -186,19 +188,19 @@ export const ChatInterface: React.FC = () => {
     setMessages([{
       id: 1,
       sender: 'bot',
-      text: 'Üdvözlöm! Bence Masszázs Szalon virtuális asszisztense vagyok. Segítek megtalálni a számodra ideális masszázst. Mi az, ami leginkább zavar mostanában – feszültség, fájdalom, vagy egyszerűen csak kell egy kis feltöltődés?'
+      text: 'Üdvözlöm! Dr. Tokár Zsuzsanna Kardiológiai Magánrendelésének virtuális asszisztense vagyok. Segítek megtalálni az Ön számára megfelelő vizsgálatot. Milyen panasza van, vagy miben segíthetek?'
     }]);
     setIsTyping(false);
 
     const chat = ai.chats.create({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.0-flash-001',
       config: {
-        systemInstruction: `Te a Bence Masszázs Szalon virtuális asszisztense vagy Nyíregyházán. 
-          A célod, hogy segíts a felhasználóknak megtalálni a számukra ideális masszázs kezelést.
-          Magyarul beszélj. Légy udvarias, professzionális, de barátságos. 
+        systemInstruction: `Te Dr. Tokár Zsuzsanna Kardiológiai Magánrendelésének virtuális asszisztense vagy Nyíregyházán. 
+          A célod, hogy segíts a pácienseknek megtalálni a számukra megfelelő kardiológiai vizsgálatot.
+          Magyarul beszélj. Légy udvarias, professzionális, és együttérző. 
           Tartsd a válaszaidat tömören.
 
-          FONTOS: A felhasználót már üdvözöltük. NE mutatkozz be újra.
+          FONTOS: A pácienst már üdvözöltük. NE mutatkozz be újra.
           
           Minden kérdésed végére adj 3-4 opciót:
           [OPTIONS: Opció 1 | Opció 2 | Opció 3]
@@ -206,9 +208,9 @@ export const ChatInterface: React.FC = () => {
           Szolgáltatások:
           ${JSON.stringify(FULL_SERVICES_DATA)}
 
-          Ha azonosítottad a szolgáltatást, használd a 'recommendService' eszközt.
+          Ha azonosítottad a vizsgálatot, használd a 'recommendExamination' eszközt.
           `,
-        tools: [{ functionDeclarations: [recommendServiceFunction] }],
+        tools: [{ functionDeclarations: [recommendExaminationFunction] }],
       },
     });
     setChatSession(chat);
@@ -216,27 +218,27 @@ export const ChatInterface: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-gray-900 rounded-3xl shadow-2xl shadow-black/50 overflow-hidden border border-gold-400/20 flex flex-col h-[500px] md:h-[600px] relative z-20 backdrop-blur-sm transition-all duration-300">
+    <div className="w-full max-w-md mx-auto bg-primary-800 rounded-3xl shadow-2xl shadow-black/50 overflow-hidden border border-accent-400/20 flex flex-col h-[500px] md:h-[600px] relative z-20 backdrop-blur-sm transition-all duration-300">
       {/* Premium Header */}
-      <div className="bg-black p-4 border-b border-gold-400/20 flex items-center justify-between shrink-0">
+      <div className="bg-primary-900 p-4 border-b border-accent-400/20 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-black shadow-lg shadow-gold-400/30">
-              <Bot size={20} strokeWidth={1.5} />
+            <div className="w-10 h-10 bg-gradient-to-br from-accent-400 to-accent-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-accent-400/30">
+              <Heart size={20} strokeWidth={1.5} fill="currentColor" />
             </div>
-            <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-black rounded-full"></span>
+            <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-primary-900 rounded-full"></span>
           </div>
           <div>
-            <h3 className="font-heading font-bold text-white text-base leading-tight">Masszázs Tanácsadó</h3>
+            <h3 className="font-heading font-bold text-white text-base leading-tight">Kardiológiai Tanácsadó</h3>
             <div className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-              <p className="text-gold-400 text-[10px] font-medium uppercase tracking-wide">Bence Masszázs Szalon</p>
+              <p className="text-accent-400 text-[10px] font-medium uppercase tracking-wide">Dr. Tokár Zsuzsanna</p>
             </div>
           </div>
         </div>
         <button
           onClick={restartChat}
-          className="p-2 text-gray-500 hover:text-gold-400 hover:bg-gold-400/10 rounded-full transition-colors"
+          className="p-2 text-gray-500 hover:text-accent-400 hover:bg-accent-400/10 rounded-full transition-colors"
           title="Beszélgetés újrakezdése"
         >
           <RefreshCw size={16} />
@@ -246,7 +248,7 @@ export const ChatInterface: React.FC = () => {
       {/* Messages Area */}
       <div
         ref={scrollContainerRef}
-        className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-900 to-gray-950 scrollbar-thin scrollbar-thumb-gray-700"
+        className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-primary-800 to-primary-900 scrollbar-thin scrollbar-thumb-gray-700"
       >
         {messages.map((msg) => (
           <div
@@ -255,9 +257,9 @@ export const ChatInterface: React.FC = () => {
           >
             {msg.isRecommendation ? (
               <div className="w-full max-w-[95%]">
-                <div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-gold-400/30 rounded-2xl p-5 shadow-lg">
-                  <div className="flex items-center gap-2 mb-3 text-gold-400 font-bold uppercase text-xs tracking-wider">
-                    <Sparkles size={14} /> Ajánlott masszázs
+                <div className="bg-gradient-to-br from-primary-700 to-primary-800 border border-accent-400/30 rounded-2xl p-5 shadow-lg">
+                  <div className="flex items-center gap-2 mb-3 text-accent-400 font-bold uppercase text-xs tracking-wider">
+                    <Sparkles size={14} /> Javasolt vizsgálat
                   </div>
                   <h4 className="text-xl font-heading font-bold text-white mb-2">
                     {msg.serviceData.name}
@@ -267,21 +269,21 @@ export const ChatInterface: React.FC = () => {
                   </p>
                   <button
                     onClick={handleBookingClick}
-                    className="w-full bg-gradient-to-r from-gold-400 to-gold-500 text-black py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:from-gold-500 hover:to-gold-600 hover:shadow-lg hover:shadow-gold-400/20 transition-all transform hover:scale-[1.02]"
+                    className="w-full bg-gradient-to-r from-accent-400 to-accent-500 text-white py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:from-accent-500 hover:to-accent-600 hover:shadow-lg hover:shadow-accent-400/20 transition-all transform hover:scale-[1.02]"
                   >
                     <CalendarCheck size={18} />
-                    Időpontfoglalás
+                    Időpontot kérek
                   </button>
                   <p className="text-center text-xs text-gray-500 mt-3">
-                    Online foglalás itt az oldalon
+                    Vagy hívjon: 30/551-6668
                   </p>
                 </div>
               </div>
             ) : (
               <div
                 className={`max-w-[85%] p-4 rounded-2xl text-[15px] leading-relaxed shadow-sm ${msg.sender === 'user'
-                  ? 'bg-gradient-to-r from-gold-400 to-gold-500 text-black rounded-br-none'
-                  : 'bg-gray-800 text-gray-200 border border-gray-700 rounded-bl-none'
+                  ? 'bg-gradient-to-r from-accent-400 to-accent-500 text-white rounded-br-none'
+                  : 'bg-primary-700 text-gray-200 border border-gray-600 rounded-bl-none'
                   }`}
               >
                 {msg.text}
@@ -292,12 +294,12 @@ export const ChatInterface: React.FC = () => {
 
         {isTyping && (
           <div className="flex justify-start w-full animate-fade-in">
-            <div className="flex items-center gap-2 bg-gray-800 border border-gray-700 px-4 py-3 rounded-2xl rounded-bl-none shadow-sm">
+            <div className="flex items-center gap-2 bg-primary-700 border border-gray-600 px-4 py-3 rounded-2xl rounded-bl-none shadow-sm">
               <span className="text-xs text-gray-400 font-medium mr-1">Gondolkodik...</span>
               <div className="flex gap-1">
-                <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-bounce"></span>
-                <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-bounce delay-75"></span>
-                <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-bounce delay-150"></span>
+                <span className="w-1.5 h-1.5 bg-accent-400 rounded-full animate-bounce"></span>
+                <span className="w-1.5 h-1.5 bg-accent-400 rounded-full animate-bounce delay-75"></span>
+                <span className="w-1.5 h-1.5 bg-accent-400 rounded-full animate-bounce delay-150"></span>
               </div>
             </div>
           </div>
@@ -306,13 +308,13 @@ export const ChatInterface: React.FC = () => {
 
       {/* Suggestion Chips Area */}
       {currentSuggestions.length > 0 && (
-        <div className="px-4 pb-2 bg-gray-900 border-t border-gray-800 pt-2 shrink-0">
+        <div className="px-4 pb-2 bg-primary-800 border-t border-primary-700 pt-2 shrink-0">
           <div className="grid grid-cols-2 gap-2">
             {currentSuggestions.map((chip, idx) => (
               <button
                 key={`${chip}-${idx}`}
                 onClick={() => handleSend(chip)}
-                className="text-center whitespace-normal text-xs font-bold bg-gray-800 text-gray-300 px-2 py-2 rounded-lg border border-gray-700 hover:border-gold-400 hover:bg-gold-400/10 hover:text-gold-400 transition-all shadow-sm active:scale-95 flex items-center justify-center gap-1 group min-h-[40px]"
+                className="text-center whitespace-normal text-xs font-bold bg-primary-700 text-gray-300 px-2 py-2 rounded-lg border border-gray-600 hover:border-accent-400 hover:bg-accent-400/10 hover:text-accent-400 transition-all shadow-sm active:scale-95 flex items-center justify-center gap-1 group min-h-[40px]"
               >
                 {chip}
               </button>
@@ -322,13 +324,13 @@ export const ChatInterface: React.FC = () => {
       )}
 
       {/* Input Area */}
-      <div className="p-3 bg-black border-t border-gray-800 shrink-0">
+      <div className="p-3 bg-primary-900 border-t border-primary-700 shrink-0">
         <div className="relative flex items-center gap-2 group">
           <input
             id="chatbot-input"
             type="text"
-            placeholder="Írj üzenetet..."
-            className="w-full bg-gray-800 text-gray-200 text-sm rounded-xl py-3 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-gold-400/30 focus:bg-gray-700 transition-all border border-gray-700 focus:border-gold-400/50 placeholder-gray-500"
+            placeholder="Írja le panaszát..."
+            className="w-full bg-primary-700 text-gray-200 text-sm rounded-xl py-3 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-accent-400/30 focus:bg-primary-600 transition-all border border-gray-600 focus:border-accent-400/50 placeholder-gray-500"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
@@ -336,7 +338,7 @@ export const ChatInterface: React.FC = () => {
           <button
             onClick={() => handleSend()}
             disabled={!inputValue.trim()}
-            className="absolute right-2 p-1.5 bg-gold-400 text-black rounded-lg hover:bg-gold-500 disabled:opacity-50 disabled:hover:bg-gold-400 transition-all shadow-md hover:shadow-lg"
+            className="absolute right-2 p-1.5 bg-accent-400 text-white rounded-lg hover:bg-accent-500 disabled:opacity-50 disabled:hover:bg-accent-400 transition-all shadow-md hover:shadow-lg"
           >
             <Send size={16} />
           </button>
