@@ -2,8 +2,8 @@ import { AvailabilityResponse, BookingRequest } from './types';
 
 // Dr. Tokár Zsuzsanna Kardiológia API configuration
 const BASE_URL = 'https://jdwhmvruzbvkzgfdousz.supabase.co/functions/v1';
-const PUBLIC_API_KEY = 'I1PqMKsznx7kVd5aTx9qQQN6YHXEkOVVBTTpCE6f3nZGfu7O';
-const BOOKING_API_KEY = 'mXqaHgCWU2TRBwN6296EIqJcqzEWaJdkVCRamma97ecHmWFB';
+const PUBLIC_API_KEY = import.meta.env.VITE_AVAILABILITY_API_KEY;
+const BOOKING_API_KEY = import.meta.env.VITE_BOOKING_API_KEY;
 
 export class BookingApiError extends Error {
     constructor(
